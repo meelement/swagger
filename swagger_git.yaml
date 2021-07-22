@@ -1,0 +1,3578 @@
+swagger: '2.0'
+info:
+  description: APIs for PhoneMarket Project
+  version: 1.0.0
+  title: PN News APIs
+  termsOfService: 'http://congdanso.lc'
+  contact:
+    email: phamlinh0208@gmail.com
+  license:
+    name: Private
+    url: 'http://phonemarket.lc'
+basePath: /api-fe
+tags:
+  - name: pop
+    description: Map pop
+  - name: cv
+    description: CV
+  - name: situation
+    description: Phan anh hien truong
+  - name: bds
+    description: Bds
+  - name: job
+    description: Job
+  - name: news
+    description: News
+  - name: app
+    description: App Setting
+  - name: auth
+    description: Authentication
+  - name: user
+    description: Operations about user
+  - name: friend
+    description: Operations about friend
+  - name: media
+    description: Operations about media
+schemes:
+  - http
+  - https
+paths:
+  /pop:
+    get:
+      tags:
+        - pop
+      summary: Map pop
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: query
+          name: type
+          description: 'district : theo quan, ward: xa phuong, lay theo province: tinh'
+          required: true
+          type: string
+          format: text
+        - in: query
+          name: province_id
+          description: tinh
+          required: false
+          type: number
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /pop/mappoplist:
+    get:
+      tags:
+        - pop
+      summary: Map pop
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: query
+          name: province_id
+          description: province_id
+          required: false
+          type: string
+          format: text
+        - in: query
+          name: province_name
+          description: province_name
+          required: false
+          type: string
+          format: text
+        - in: query
+          name: district_id
+          description: district_id
+          required: false
+          type: string
+          format: text
+        - in: query
+          name: district_name
+          description: district_name
+          required: false
+          type: string
+          format: text
+        - in: query
+          name: ward_id
+          description: ward_id
+          required: false
+          type: string
+          format: text
+        - in: query
+          name: ward_name
+          description: ward_name
+          required: false
+          type: string
+          format: text
+        - in: query
+          name: page
+          description: page
+          required: false
+          type: string
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /friend/listnoti:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - friend
+      summary: listnoti
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: query
+          name: group_id
+          description: group_id
+          required: false
+          type: string
+          format: text
+        - in: query
+          name: msisdn
+          description: msisdn
+          required: false
+          type: string
+          format: text
+        - in: query
+          name: friend_msisdn
+          description: friend_msisdn
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: page
+          description: page
+          required: false
+          type: integer
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /friend/addnoti:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - friend
+      summary: addnoti
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: group_id
+          description: group_id
+          required: true
+          type: string
+          format: text
+        - in: formData
+          name: content
+          description: content
+          required: true
+          type: string
+          format: text
+        - in: formData
+          name: push_time
+          description: push_time format yyyymmddhh24mmss
+          required: false
+          type: string
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /friend/addnotiforfriend:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - friend
+      summary: addnotiforfriend
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: friend_msisdn
+          description: friend_msisdn
+          required: true
+          type: string
+          format: text
+        - in: formData
+          name: content
+          description: content
+          required: true
+          type: string
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /friend/updatenotistatus:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - friend
+      summary: updatenotistatus
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: noti_id
+          description: noti_id
+          required: true
+          type: string
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /friend/detailfriend:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - friend
+      summary: chi tiet
+      description: chi tiet
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: query
+          name: friend_msisdn
+          description: friend_msisdn
+          required: true
+          type: string
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /friend/suggest:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - friend
+      summary: DS Friend Suggest
+      description: DS Friend Suggest
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: query
+          name: req_condition
+          description: req_condition
+          required: false
+          type: string
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /friend/addgroup:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - friend
+      summary: addgroup
+      description: addgroup
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: group_name
+          description: group_name
+          required: true
+          type: string
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /friend/listgroup:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - friend
+      summary: listgroup
+      description: listgroup
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters: []
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /friend/addgroupfriend:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - friend
+      summary: addgroupfriend
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: group_id
+          description: group_id
+          required: true
+          type: string
+          format: text
+        - in: formData
+          name: group_name
+          description: group_name
+          required: true
+          type: string
+          format: text
+        - in: formData
+          name: friend_msisdn
+          description: friend_msisdn
+          required: true
+          type: string
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /friend/removegroupfriend:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - friend
+      summary: removegroupfriend
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: group_id
+          description: group_id
+          required: true
+          type: string
+          format: text
+        - in: formData
+          name: group_name
+          description: group_name
+          required: true
+          type: string
+          format: text
+        - in: formData
+          name: friend_msisdn
+          description: friend_msisdn
+          required: true
+          type: string
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /friend/removegroup:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - friend
+      summary: removegroupfriend
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: group_id
+          description: group_id
+          required: true
+          type: string
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /friend/addfriend:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - friend
+      summary: addfriend
+      description: addfriend
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: group_id
+          description: group_id
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: friend_name
+          description: friend_name
+          required: true
+          type: string
+          format: text
+        - in: formData
+          name: friend_id
+          description: friend_id
+          required: true
+          type: string
+          format: text
+        - in: formData
+          name: friend_sex
+          description: |-
+            friend_sex 0 - Nữ
+            1- Nam
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: friend_msisdn
+          description: friend_msisdn
+          required: true
+          type: string
+          format: text
+        - in: formData
+          name: friend_note
+          description: friend_note
+          required: true
+          type: string
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /friend/listfriendAdded:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - friend
+      summary: listfriendAdded
+      description: listfriendAdded
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: query
+          name: group_id
+          description: group_id
+          required: false
+          type: string
+          format: text
+        - in: query
+          name: friend_msisdn
+          description: friend_msisdn
+          required: false
+          type: string
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /friend/listinvite:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - friend
+      summary: listinvite
+      description: listinvite
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters: []
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /friend/acceptfriend:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - friend
+      summary: acceptfriend
+      description: acceptfriend
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: query
+          name: friend_msisdn
+          description: friend_msisdn
+          required: true
+          type: string
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /friend/rejectfriend:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - friend
+      summary: rejectfriend
+      description: rejectfriend
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: query
+          name: friend_msisdn
+          description: friend_msisdn
+          required: true
+          type: string
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /cv/apply-job:
+    post:
+      tags:
+        - cv
+      security:
+        - Bearer: []
+      summary: tao cv
+      description: ''
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: jobId
+          description: job id
+          required: true
+          type: integer
+          format: text
+        - in: formData
+          name: note
+          description: '  chu thich'
+          required: false
+          type: string
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /cv:
+    post:
+      tags:
+        - cv
+      security:
+        - Bearer: []
+      summary: tao cv
+      description: ''
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: cvName
+          description: Tên CV
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: gender
+          description: '  0 - nữ, 1 - nam'
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: address
+          description: dia chi
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: email
+          description: email
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: education
+          description: Học vấn
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: experience
+          description: kn làm việc
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: skills
+          description: kỹ năng (ngăn cách các kỹ năng bởi dấu ; )
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: birthdayStr
+          description: Ngày sinh ( theo định dạng dd/MM/yyyy)
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: fullname
+          description: Họ tên
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: careerName
+          description: Tên cv
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: expectedSalary
+          description: Mức lương mong muốn
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: avatarUrl
+          description: đường dẫn ảnh
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: requireTime
+          description: requireTime
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: provinceId
+          description: provinceId
+          required: false
+          type: number
+          format: text
+        - in: formData
+          name: districtId
+          description: districtId
+          required: false
+          type: number
+          format: text
+        - in: formData
+          name: wardId
+          description: wardId
+          required: false
+          type: number
+          format: text
+        - in: formData
+          name: degree
+          description: degree
+          required: false
+          type: string
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  '/cv/{cv_id}/update':
+    post:
+      tags:
+        - cv
+      security:
+        - Bearer: []
+      summary: tao cv
+      description: ''
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: path
+          name: cv_id
+          description: ID CV
+          required: false
+          type: integer
+          format: text
+        - in: formData
+          name: cvName
+          description: Tên CV
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: gender
+          description: '  0 - nữ, 1 - nam'
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: address
+          description: dia chi
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: email
+          description: email
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: education
+          description: Học vấn
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: experience
+          description: kn làm việc
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: skills
+          description: kỹ năng (ngăn cách các kỹ năng bởi dấu ; )
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: birthdayStr
+          description: Ngày sinh ( theo định dạng dd/MM/yyyy)
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: fullname
+          description: Họ tên
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: careerName
+          description: Tên cv
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: expectedSalary
+          description: Mức lương mong muốn
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: avatarUrl
+          description: đường dẫn ảnh
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: requireTime
+          description: requireTime
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: provinceId
+          description: provinceId
+          required: false
+          type: number
+          format: text
+        - in: formData
+          name: districtId
+          description: districtId
+          required: false
+          type: number
+          format: text
+        - in: formData
+          name: wardId
+          description: wardId
+          required: false
+          type: number
+          format: text
+        - in: formData
+          name: degree
+          description: degree
+          required: false
+          type: string
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /cv/list:
+    get:
+      tags:
+        - cv
+      security:
+        - Bearer: []
+      summary: Danh sach cv
+      description: ''
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: query
+          name: msisdn
+          description: So dien thoai
+          required: false
+          type: string
+          format: text
+        - in: query
+          name: cvName
+          description: Tên CV
+          required: false
+          type: string
+          format: text
+        - in: query
+          name: gender
+          description: '  0 - nữ, 1 - nam'
+          required: false
+          type: string
+          format: text
+        - in: query
+          name: address
+          description: dia chi
+          required: false
+          type: string
+          format: text
+        - in: query
+          name: email
+          description: email
+          required: false
+          type: string
+          format: text
+        - in: query
+          name: education
+          description: Học vấn
+          required: false
+          type: string
+          format: text
+        - in: query
+          name: experience
+          description: kn làm việc
+          required: false
+          type: string
+          format: text
+        - in: query
+          name: skills
+          description: kỹ năng (ngăn cách các kỹ năng bởi dấu ; )
+          required: false
+          type: string
+          format: text
+        - in: query
+          name: birthdayStr
+          description: Ngày sinh ( theo định dạng dd/MM/yyyy)
+          required: false
+          type: string
+          format: text
+        - in: query
+          name: avatarUrl
+          description: đường dẫn ảnh
+          required: false
+          type: string
+          format: text
+        - in: query
+          name: provinceId
+          description: provinceId
+          required: false
+          type: number
+          format: text
+        - in: query
+          name: msisdn
+          description: msisdn
+          required: false
+          type: number
+          format: text
+        - in: query
+          name: districtId
+          description: districtId
+          required: false
+          type: number
+          format: text
+        - in: query
+          name: wardId
+          description: wardId
+          required: false
+          type: number
+          format: text
+        - in: query
+          name: salaryMax
+          description: salaryMax
+          required: false
+          type: number
+          format: text
+        - in: query
+          name: salaryMin
+          description: salaryMin
+          required: false
+          type: number
+          format: text
+        - in: query
+          name: degree
+          description: degree
+          required: false
+          type: string
+          format: text
+        - in: query
+          name: requireTime
+          description: requireTime
+          required: false
+          type: string
+          format: text
+        - in: query
+          name: page
+          description: page
+          required: false
+          type: integer
+          format: text
+        - in: query
+          name: per_page
+          description: per_page
+          required: false
+          type: integer
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /cv/my-applied:
+    get:
+      tags:
+        - cv
+      summary: API Danh sách các cv đã nộp và trạng thái từng cv
+      description: ''
+      produces:
+        - application/json
+        - application/xml
+      security:
+        - Bearer: []
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters: []
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  '/cv/{id}/detail':
+    get:
+      tags:
+        - cv
+      security:
+        - Bearer: []
+      summary: cv detail
+      description: cv detail
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: path
+          name: id
+          description: cv id
+          required: true
+          type: integer
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties:
+                  user_id:
+                    type: integer
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /cv/mycv:
+    get:
+      tags:
+        - cv
+      security:
+        - Bearer: []
+      summary: cv detail
+      description: cv detail
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters: []
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties:
+                  user_id:
+                    type: integer
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /situation:
+    post:
+      tags:
+        - situation
+      security:
+        - Bearer: []
+      summary: 'tao tin phan anh '
+      description: ''
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: title
+          description: 'Tieu de '
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: content
+          description: '  noi dung phan anh'
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: address
+          description: dia chi
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: image_urls
+          description: 'Dánh sách các ảnh đi kèm( ngăn cách nhau bởi dấu , )'
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: video_urls
+          description: 'Dánh sách các video đi kèm( ngăn cách nhau bởi dấu , )'
+          required: false
+          type: string
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /situation/list:
+    get:
+      tags:
+        - situation
+      summary: Danh sach phan anh
+      description: ''
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: query
+          name: title
+          description: Tieu de
+          required: false
+          type: integer
+          format: text
+        - in: query
+          name: content
+          description: noi dung phan anh
+          required: false
+          type: string
+          format: text
+        - in: query
+          name: address
+          description: address
+          required: false
+          type: string
+          format: text
+        - in: query
+          name: excludeMe
+          description: 'excludeMe : 1: cong dong, 2 : cua toi, ko truyen j lay tat ca'
+          required: false
+          type: integer
+          format: text
+        - in: query
+          name: msisdn
+          description: 'sdt : nếu excludeMe = 2 , 1 băt buộc phải truyền lên '
+          required: false
+          type: integer
+          format: text
+        - in: query
+          name: page
+          description: page
+          required: false
+          type: integer
+          format: text
+        - in: query
+          name: per_page
+          description: per_page
+          required: false
+          type: integer
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  '/situation/{id}/detail':
+    get:
+      tags:
+        - situation
+      summary: phan anh detail
+      description: phan anh detail
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: path
+          name: id
+          description: phan anh id
+          required: true
+          type: integer
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties:
+                  user_id:
+                    type: integer
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /bds:
+    post:
+      tags:
+        - bds
+      summary: tao tin bds
+      description: ''
+      produces:
+        - application/json
+        - application/xml
+      security:
+        - Bearer: []
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: type_id
+          description: 'kiểu nhà đất '
+          required: false
+          type: integer
+          format: text
+        - in: formData
+          name: title
+          description: '  Tên tiêu đề'
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: price
+          description: ' giá ( đơn vị Triệu  1000 => 1 tỉ'
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: price_name
+          description: '  giá chữ ( 1 tỉ )'
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: area
+          description: Khu vực
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: acreage
+          description: Diện tích
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: intro
+          description: Giới thiệu
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: project_id
+          description: Id của dự án
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: desc
+          description: Mô tả
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: province_id
+          description: id tỉnh thành
+          required: false
+          type: integer
+          format: text
+        - in: formData
+          name: district_id
+          description: ld quan huyen
+          required: false
+          type: integer
+          format: text
+        - in: formData
+          name: phoenix_id
+          description: ld xa phuong
+          required: false
+          type: integer
+          format: text
+        - in: formData
+          name: note
+          description: ghi chú
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: image_urls
+          description: 'Dánh sách các ảnh đi kèm( ngăn cách nhau bởi dấu , )'
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: contact_name
+          description: Tên người liên lạc
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: contact_phone
+          description: Sdt liên lạc
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: contact_address
+          description: địa chỉ liên lạc
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: contact_province_id
+          description: id tỉnh ng liên lạc
+          required: false
+          type: integer
+          format: text
+        - in: formData
+          name: contact_district_id
+          description: id huyện ng liên lạc
+          required: false
+          type: integer
+          format: text
+        - in: formData
+          name: contact_phoenix_id
+          description: id xã ng liên lạc
+          required: false
+          type: integer
+          format: text
+        - in: formData
+          name: num_month
+          description: ' Số tháng có hiệu lực'
+          required: false
+          type: integer
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /bds/list:
+    get:
+      tags:
+        - bds
+      summary: Danh sach bds
+      description: ''
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: query
+          name: land_type_id
+          description: ld loại BĐS
+          required: false
+          type: integer
+          format: text
+        - in: query
+          name: land_product_title
+          description: tìm kiếm theo tên BDS
+          required: false
+          type: string
+          format: text
+        - in: query
+          name: land_product_area
+          description: tìm kiếm theo khu vực
+          required: false
+          type: string
+          format: text
+        - in: query
+          name: province_id
+          description: id tỉnh thành
+          required: false
+          type: integer
+          format: text
+        - in: query
+          name: district_id
+          description: ld quan huyen
+          required: false
+          type: integer
+          format: text
+        - in: query
+          name: phoenix_id
+          description: ld xa phuong
+          required: false
+          type: integer
+          format: text
+        - in: query
+          name: page
+          description: page
+          required: false
+          type: integer
+          format: text
+        - in: query
+          name: per_page
+          description: per_page
+          required: false
+          type: integer
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  '/bds/{id}/detail':
+    get:
+      tags:
+        - bds
+      summary: bds detail
+      description: bds detail
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: path
+          name: id
+          description: bds id
+          required: true
+          type: integer
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties:
+                  user_id:
+                    type: integer
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /bds/categories:
+    get:
+      tags:
+        - bds
+      summary: Danh sach categories
+      description: ''
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters: []
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /jobs:
+    post:
+      tags:
+        - job
+      security:
+        - Bearer: []
+      summary: tao job
+      description: ''
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: title
+          description: tiêu đề
+          required: true
+          type: string
+          format: text
+        - in: formData
+          name: salaryMin
+          description: lương min
+          required: true
+          type: string
+          format: text
+        - in: formData
+          name: salaryMax
+          description: lương max
+          required: true
+          type: string
+          format: text
+        - in: formData
+          name: requireDegree
+          description: yêu cầu trình độ
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: requireGender
+          description: |
+            0 - Nữ
+            1- Nam
+            null - không yêu cầu
+          required: false
+          type: integer
+          format: text
+        - in: formData
+          name: contactSite
+          description: site liên lạc
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: contactName
+          description: tên người liên lạc
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: contactMsisdn
+          description: sdt người liên lạc
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: contactAddress
+          description: địa chỉ người liên lạc
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: workPlace
+          description: địa điểm làm việc
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: levelId
+          description: Id cấp bậc
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: logoUrl
+          description: logo
+          required: true
+          type: string
+          format: text
+        - in: formData
+          name: coverUrl
+          description: ảnh background
+          required: true
+          type: string
+          format: text
+        - in: formData
+          name: compName
+          description: Tên công ty
+          required: true
+          type: string
+          format: text
+        - in: formData
+          name: compImageUrl
+          description: Ảnh công ty
+          required: true
+          type: string
+          format: text
+        - in: formData
+          name: compDesc
+          description: Mô tả cty
+          required: true
+          type: string
+          format: text
+        - in: formData
+          name: compCoreValues
+          description: Giá trị cốt lõi cty
+          required: true
+          type: string
+          format: text
+        - in: formData
+          name: numOfValidMonth
+          description: Số tháng hiệu lực
+          required: true
+          type: string
+          format: text
+        - in: formData
+          name: provinceId
+          description: provinceId
+          required: false
+          type: number
+          format: text
+        - in: formData
+          name: districtId
+          description: districtId
+          required: false
+          type: number
+          format: text
+        - in: formData
+          name: level
+          description: level
+          required: false
+          type: string
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /jobs/categories:
+    get:
+      tags:
+        - job
+      summary: Danh sach categories
+      description: ''
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters: []
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /jobs/companies:
+    get:
+      tags:
+        - job
+      summary: Danh sach companies
+      description: ''
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters: []
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /jobs/careers:
+    get:
+      tags:
+        - job
+      summary: Danh sach careers
+      description: ''
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters: []
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /jobs/skills:
+    get:
+      tags:
+        - job
+      summary: Danh sach skills
+      description: ''
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters: []
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /jobs/levels:
+    get:
+      tags:
+        - job
+      summary: Danh sach levels
+      description: ''
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters: []
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /jobs/list:
+    get:
+      tags:
+        - job
+      summary: Danh sach job
+      description: ''
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: query
+          name: msisdn
+          description: sdt ng tao
+          required: false
+          type: string
+          format: text
+        - in: query
+          name: requireGender
+          description: requireGender
+          required: false
+          type: number
+          format: text
+        - in: query
+          name: provinceId
+          description: provinceId
+          required: false
+          type: number
+          format: text
+        - in: query
+          name: districtId
+          description: districtId
+          required: false
+          type: number
+          format: text
+        - in: query
+          name: wardId
+          description: wardId
+          required: false
+          type: number
+          format: text
+        - in: query
+          name: salaryMax
+          description: salaryMax
+          required: false
+          type: number
+          format: text
+        - in: query
+          name: salaryMin
+          description: salaryMin
+          required: false
+          type: number
+          format: text
+        - in: query
+          name: degree
+          description: degree
+          required: false
+          type: string
+          format: text
+        - in: query
+          name: requireTime
+          description: requireTime
+          required: false
+          type: string
+          format: text
+        - in: query
+          name: page
+          description: page
+          required: false
+          type: integer
+          format: text
+        - in: query
+          name: per_page
+          description: per_page
+          required: false
+          type: integer
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  '/jobs/{id}/detail':
+    get:
+      tags:
+        - job
+      summary: job detail
+      description: job detail
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: path
+          name: id
+          description: job id
+          required: true
+          type: integer
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties:
+                  user_id:
+                    type: integer
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /news:
+    get:
+      tags:
+        - news
+      summary: news list
+      description: news list
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: query
+          name: category_id
+          description: category id
+          required: false
+          type: integer
+          format: text
+        - in: query
+          name: keyword
+          description: keyword id
+          required: false
+          type: string
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties:
+                  user_id:
+                    type: integer
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /news/covid19:
+    get:
+      tags:
+        - news
+      summary: covid19 list
+      description: covid19 list
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: query
+          name: page
+          description: page
+          required: false
+          type: integer
+          format: text
+        - in: query
+          name: per_page
+          description: per_page
+          required: false
+          type: integer
+          format: text
+        - in: query
+          name: keyword
+          description: keyword id
+          required: false
+          type: string
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties:
+                  user_id:
+                    type: integer
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /news/gov_shop:
+    get:
+      tags:
+        - news
+      summary: gov_shop list
+      description: gov_shop list
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: query
+          name: page
+          description: page
+          required: false
+          type: integer
+          format: text
+        - in: query
+          name: per_page
+          description: per_page
+          required: false
+          type: integer
+          format: text
+        - in: query
+          name: keyword
+          description: keyword id
+          required: false
+          type: string
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties:
+                  user_id:
+                    type: integer
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  '/news/{id}/detail':
+    get:
+      tags:
+        - news
+      summary: news detail
+      description: news detail
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: path
+          name: id
+          description: news id
+          required: true
+          type: integer
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties:
+                  user_id:
+                    type: integer
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /news/categories:
+    get:
+      tags:
+        - news
+      summary: danh muc
+      description: danh muc
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties:
+                  user_id:
+                    type: integer
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /news/categories/notifications:
+    get:
+      tags:
+        - news
+      summary: thong bao
+      description: thong bao
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/json
+      parameters:
+        - in: query
+          name: page
+          description: page
+          required: false
+          type: integer
+          format: text
+        - in: query
+          name: per_page
+          description: per_page
+          required: false
+          type: integer
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /news/categories/promotions:
+    get:
+      tags:
+        - news
+      summary: Api danh mục TIN KHUYẾN MẠI
+      description: Api danh mục TIN KHUYẾN MẠI
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/json
+      parameters:
+        - in: query
+          name: page
+          description: page
+          required: false
+          type: integer
+          format: text
+        - in: query
+          name: per_page
+          description: per_page
+          required: false
+          type: integer
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /auth/register:
+    post:
+      tags:
+        - auth
+      summary: register
+      description: register
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: username
+          description: username
+          required: true
+          type: string
+          format: text
+        - in: formData
+          name: name
+          description: name
+          required: true
+          type: string
+          format: text
+        - in: formData
+          name: gender
+          description: 'gender:0 khac, 1 nam, 2 nu'
+          required: true
+          type: integer
+          format: text
+        - in: formData
+          name: password
+          description: password
+          required: true
+          type: string
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              Message:
+                type: string
+              StatusCode:
+                type: integer
+              Data:
+                type: object
+                properties:
+                  user_id:
+                    type: string
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  '/auth/register/verify-otp':
+    post:
+      tags:
+        - auth
+      summary: Verify OTP
+      description: Verify OTP
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: path
+          name: user_id
+          description: user_id
+          required: true
+          type: string
+          format: text
+        - in: formData
+          name: otp
+          description: otp
+          required: true
+          type: string
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              Message:
+                type: string
+              StatusCode:
+                type: integer
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  
+  /auth/login:
+    post:
+      tags:
+        - auth
+      summary: login
+      description: login
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: username
+          description: username
+          required: true
+          type: string
+          format: text
+        - in: formData
+          name: password
+          description: password
+          required: true
+          type: string
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              Message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties:
+                  token:
+                    type: string
+                  user_info:
+                    $ref: '#/definitions/User'
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /auth/forgot/password:
+    post:
+      tags:
+        - auth
+      summary: forgot password
+      description: forgot password
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: phonenumber
+          description: phonenumber
+          required: true
+          type: string
+          format: text
+        - in: formData
+          name: otp
+          description: otp
+          required: true
+          type: string
+          format: text
+        - in: formData
+          name: newpassword
+          description: newpassword
+          required: true
+          type: string
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  '/auth/forgot/password-otp':
+    post:
+      tags:
+        - auth
+      summary: forgot password send otp
+      description: forgot password send otp
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: phonenumber
+          description: phonenumber
+          required: true
+          type: string
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              Message:
+                type: string
+              StatusCode:
+                type: string
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  '/auth/forgot/verify-otp':
+    post:
+      tags:
+        - auth
+      summary: check otp
+      description: check otp
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: phonenumber
+          description: phonenumber
+          required: true
+          type: string
+          format: text
+        - in: path
+          name: otp
+          description: otp
+          required: true
+          type: string
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties:
+                  user_id:
+                    type: integer
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /media/file:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - media
+      summary: Upload file
+      description: Upload file
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in: formData
+          name: file
+          description: file
+          required: true
+          type: file
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties:
+                  id:
+                    type: integer
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  '/auth/change/password':
+    post:
+      tags:
+        - auth
+      summary: change password
+      description: change password
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: path
+          name: phonenumber
+          description: phonenumber
+          required: true
+          type: string
+          format: text
+        - in: path
+          name: otp
+          description: otp
+          required: true
+          type: string
+          format: text
+        - in: path
+          name: oldpassword
+          description: oldpassword
+          required: true
+          type: string
+          format: text
+        - in: path
+          name: newpassword
+          description: newpassword
+          required: true
+          type: string
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  
+  /app/notifications:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - app
+      summary: App notifications
+      description: App notifications
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: query
+          name: page
+          description: page
+          required: false
+          type: integer
+          format: text
+        - in: query
+          name: per_page
+          description: per_page
+          required: false
+          type: integer
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /app/weather:
+    get:
+      tags:
+        - app
+      summary: App weather
+      description: App weather
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: query
+          name: lat
+          description: lat
+          required: false
+          type: string
+        - in: query
+          name: lng
+          description: lng
+          required: false
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /app/upload-file:
+    post:
+      tags:
+        - app
+      summary: Upload file
+      description: Upload file
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in: formData
+          name: file
+          description: file
+          required: true
+          type: file
+        - in: formData
+          name: type
+          description: '1: file, 2 video'
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties:
+                  id:
+                    type: integer
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /app/setting:
+    get:
+      tags:
+        - app
+      summary: App setting
+      description: App setting
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /app/provinces:
+    get:
+      tags:
+        - app
+      summary: danh sach tinh/tp
+      description: danh sach tinh/tp
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters: []
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /app/districts:
+    get:
+      tags:
+        - app
+      summary: danh sach quan/huyen
+      description: danh sach  quan/huyen
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: query
+          name: province_id
+          description: province_id
+          required: false
+          type: integer
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /app/phoenixes:
+    get:
+      tags:
+        - app
+      summary: danh sach xa/phuong
+      description: danh sach  xa/phuong
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: query
+          name: province_id
+          description: province_id
+          required: false
+          type: integer
+          format: text
+        - in: query
+          name: district_id
+          description: district_id
+          required: false
+          type: integer
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /app/area:
+    get:
+      tags:
+        - app
+      summary: danh sach tinh huyen xa
+      description: danh sach  tinh huyen xa
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters: []
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /user/profile:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - user
+      summary: user profile
+      description: user profile
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters: []
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /user/update:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - user
+      summary: Cap nhat user
+      description: Cap nhat user
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: name
+          description: name
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: fcm_token
+          description: fcm_token
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: phone
+          description: phone
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: gender
+          description: 'gender 1: nam, 2 : nu'
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: email
+          description: email
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: avatar
+          description: avatar
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: birthday
+          description: 'ngay sinh, YYYY-MM-YY | 2021-05-06'
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: cccd_date
+          description: 'ngay cap , YYYY-MM-YY | 2021-05-06'
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: cccd_address
+          description: Noi cap
+          required: false
+          type: string
+          format: text
+        - in: formData
+          name: province_id
+          description: Tinh / TP
+          required: false
+          type: integer
+          format: text
+        - in: formData
+          name: district_id
+          description: Quan/Huyen
+          required: false
+          type: integer
+          format: text
+        - in: formData
+          name: phoenix_id
+          description: Xa/Phuong
+          required: false
+          type: integer
+          format: text
+        - in: formData
+          name: address
+          description: Dia chi
+          required: false
+          type: string
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /user/change-password:
+    post:
+      tags:
+        - user
+      summary: change password
+      description: change password
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      security:
+        - Bearer: []
+      parameters:
+        - in: formData
+          name: old_password
+          description: old password
+          required: true
+          type: string
+          format: text
+        - in: formData
+          name: password
+          description: password
+          required: true
+          type: string
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties:
+                  token:
+                    type: string
+                  user:
+                    $ref: '#/definitions/User'
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /user/logout:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - user
+      summary: Cap nhat user
+      description: Cap nhat user
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters: []
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties: {}
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+  /user/kyc/face-match:
+    post:
+      tags:
+        - user
+      summary: face match
+      description: face match
+      produces:
+        - application/json
+        - application/xml
+      consumes:
+        - application/x-www-form-urlencoded
+      security:
+        - Bearer: []
+      parameters:
+        - in: formData
+          name: type
+          description: '1 cmd, 2 ccd'
+          required: true
+          type: string
+          format: text
+        - in: formData
+          name: person_image
+          description: Base64 anh nhan dien
+          required: true
+          type: string
+          format: text
+        - in: formData
+          name: id_image
+          description: Base64 anh mat truoc cmt
+          required: true
+          type: string
+          format: text
+        - in: formData
+          name: back_id_image
+          description: Base64 anh mat sau cmt
+          required: true
+          type: string
+          format: text
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              StatusCode:
+                type: string
+              data:
+                type: object
+                properties:
+                  token:
+                    type: string
+                  user:
+                    $ref: '#/definitions/User'
+        '400':
+          description: Invalid Data
+          schema:
+            $ref: '#/definitions/Response400'
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: 'Example: Bearer f55830c6-5bc2-4dd4-86fb-3e2c8a8b0dcd'
+definitions:
+  Game:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      type:
+        type: string
+      status:
+        type: string
+      thumbnail:
+        type: object
+    xml:
+      name: User
+  User:
+    type: object
+    properties:
+      id:
+        type: integer
+      username:
+        type: string
+    xml:
+      name: User
+  Links:
+    type: object
+    properties:
+      first:
+        type: string
+      last:
+        type: string
+      prev:
+        type: string
+      next:
+        type: string
+  Meta:
+    type: object
+    properties:
+      current_page:
+        type: integer
+      from:
+        type: integer
+      last_page:
+        type: integer
+      path:
+        type: string
+      per_page:
+        type: integer
+      to:
+        type: integer
+      total:
+        type: integer
+  Response400:
+    type: object
+    properties:
+      message:
+        type: string
+        example: Bad request.
+  Response401:
+    type: object
+    properties:
+      message:
+        type: string
+        example: Unauthenticated.
+  Response422:
+    type: object
+    properties:
+      message:
+        type: string
+        example: Unauthenticated.
+      errors:
+        type: object
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'
